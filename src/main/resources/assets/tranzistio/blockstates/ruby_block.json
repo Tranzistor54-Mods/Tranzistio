@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "tranzistio:block/ruby_block" }
+    }
+}
