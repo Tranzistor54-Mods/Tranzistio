@@ -1,17 +1,14 @@
 package com.tranzistor.tranzistio.core.containers;
 
 import java.util.Objects;
-
 import com.tranzistor.tranzistio.core.init.BlockInit;
 import com.tranzistor.tranzistio.core.init.ContainersInit;
 import com.tranzistor.tranzistio.core.te.CoalGeneratorTileEntity;
 import com.tranzistor.tranzistio.core.te.ElectricFurnaceTileEntity;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -24,11 +21,19 @@ public class ElectricFurnaceContainer extends Container{
 	private final IWorldPosCallable canInteractWithCallable;
 
 	public ElectricFurnaceContainer(final int windowId, final PlayerInventory playerInventory, final ElectricFurnaceTileEntity te) {
-		super(ContainersInit.COAL_GENERATOR.get(), windowId);
+		super(ContainersInit.ELECTRIC_FURNACE.get(), windowId);
 		this.te = te; 
 		this.canInteractWithCallable = IWorldPosCallable.create(te.getLevel(), te.getBlockPos());
 		
+		//furnace slots
+		this.addSlot(new Slot((IInventory) te, 0, 59, 35));
 
+		this.addSlot(new Slot((IInventory) te, 1, 108, 35) {
+			@Override
+			public boolean mayPlace(ItemStack stack) {
+				return false;
+			}
+		});
 		
 		//Player Inventory
 		for(int row = 0; row < 3; row++) {
@@ -72,8 +77,8 @@ public class ElectricFurnaceContainer extends Container{
 			int innerSlots = ElectricFurnaceTileEntity.slots;
 			if(index < innerSlots && !this.moveItemStackTo(stack1, innerSlots, innerSlots+36, true))
 				return ItemStack.EMPTY;
-			else if (CoalGeneratorTileEntity.getBurnTime(stack1) > 0 && !this.moveItemStackTo(stack1, 0, 1, false))
-				return ItemStack.EMPTY;
+			//else if (CoalGeneratorTileEntity.getBurnTime(stack1) > 0 && !this.moveItemStackTo(stack1, 0, 1, false))
+				//return ItemStack.EMPTY;
 			
 			if(stack1.isEmpty()) {
 				slot.set(ItemStack.EMPTY);

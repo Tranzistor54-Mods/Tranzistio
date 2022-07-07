@@ -45,8 +45,7 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 
 	public CoalGeneratorTileEntity(TileEntityType<?> tileEntityType) {
 		super(tileEntityType);
-		this.energyStorage = new ModEnergyStorage(this,
-				10000, 0, 50);
+		this.energyStorage = new ModEnergyStorage(this, 10000, 0, 50);
 		this.loEnergyStorage = LazyOptional.of(() -> this.energyStorage);
 		this.isEmpty();
 	}

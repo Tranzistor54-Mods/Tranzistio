@@ -2,60 +2,57 @@ package com.tranzistor.tranzistio.core.te;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import com.tranzistor.tranzistio.Tranzistio;
-import com.tranzistor.tranzistio.core.containers.CoalGeneratorContainer;
 import com.tranzistor.tranzistio.core.containers.ElectricFurnaceContainer;
+import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.datafix.fixes.FurnaceRecipes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class ElectricFurnaceTileEntity extends AbstractFurnaceTileEntity implements ITickableTileEntity, ISidedInventory{
-	
 	
 	public final ModEnergyStorage energyStorage;
 	public static int slots = 2;
 	public int smeltingProgress = 0, maxSmeltingProgress = 0;
+	
 	private static final int[] ENTER_SLOT = new int[] {0};
 	private static final int[] EXIT_SLOT = new int[] {1};
 	private LazyOptional<ModEnergyStorage> loEnergyStorage;
 	
 	protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
+	protected final IRecipeType<? extends AbstractCookingRecipe> recipeType;
 	
-	protected ElectricFurnaceTileEntity(TileEntityType<?> tileEntityType, IRecipeType<? extends AbstractCookingRecipe> recipe) {
+	protected ElectricFurnaceTileEntity(TileEntityType<?> tileEntityType,  IRecipeType<? extends AbstractCookingRecipe> recipe) {
 		super(tileEntityType, recipe);
-		this.energyStorage = new ModEnergyStorage(this,
-				10000, 0, 50);
+		this.energyStorage = new ModEnergyStorage(this, 10000, 0, 50);
 		this.loEnergyStorage = LazyOptional.of(() -> this.energyStorage);
 		this.isEmpty();
+		this.recipeType = recipe;
+	}
+	
+	public ElectricFurnaceTileEntity() {
+		this(TileEntityTypesInit.ELECTRIC_FURNACE_TILE_ENTITY.get(), IRecipeType.SMELTING);
 	}
 
 	
@@ -108,7 +105,7 @@ public class ElectricFurnaceTileEntity extends AbstractFurnaceTileEntity impleme
 		return slot == 1;
 	}
 
-	@Override
+	/*@Override
 	public void tick() {
 		ItemStack stack = this.getItem(0);
 		@SuppressWarnings("unchecked")
@@ -139,6 +136,7 @@ public class ElectricFurnaceTileEntity extends AbstractFurnaceTileEntity impleme
 			}
 		}
 	}
+	*/
 	
 	
 
