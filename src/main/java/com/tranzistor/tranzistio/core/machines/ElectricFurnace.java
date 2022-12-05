@@ -1,7 +1,6 @@
 package com.tranzistor.tranzistio.core.machines;
 
 import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
-import com.tranzistor.tranzistio.core.te.CoalGeneratorTileEntity;
 import com.tranzistor.tranzistio.core.te.ElectricFurnaceTileEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;

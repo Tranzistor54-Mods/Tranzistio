@@ -3,7 +3,6 @@ package com.tranzistor.tranzistio.core.containers;
 import java.util.Objects;
 import com.tranzistor.tranzistio.core.init.BlockInit;
 import com.tranzistor.tranzistio.core.init.ContainersInit;
-import com.tranzistor.tranzistio.core.te.CoalGeneratorTileEntity;
 import com.tranzistor.tranzistio.core.te.ElectricFurnaceTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -77,8 +76,8 @@ public class ElectricFurnaceContainer extends Container{
 			int innerSlots = ElectricFurnaceTileEntity.slots;
 			if(index < innerSlots && !this.moveItemStackTo(stack1, innerSlots, innerSlots+36, true))
 				return ItemStack.EMPTY;
-			//else if (CoalGeneratorTileEntity.getBurnTime(stack1) > 0 && !this.moveItemStackTo(stack1, 0, 1, false))
-				//return ItemStack.EMPTY;
+			else if (!this.moveItemStackTo(stack1, 0, 1, false))
+				return ItemStack.EMPTY;
 			
 			if(stack1.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
@@ -92,5 +91,7 @@ public class ElectricFurnaceContainer extends Container{
 		}
 		return stack;
 	}
+	
+	
 
 }

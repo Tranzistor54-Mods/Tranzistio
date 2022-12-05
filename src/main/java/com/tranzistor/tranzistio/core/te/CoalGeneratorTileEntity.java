@@ -5,6 +5,9 @@ import com.tranzistor.tranzistio.core.containers.CoalGeneratorContainer;
 import com.tranzistor.tranzistio.core.init.ItemInit;
 import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
+
+import java.util.ArrayList;
+
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
@@ -18,11 +21,13 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,15 +42,12 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 	public int progress = 0, maxProgress = 0;
 	private static final int[] FUEL_SLOTS = new int[]{0};
 	private static final int[] ASH_SLOTS = new int[]{1};
-
 	protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
-
 	private LazyOptional<ModEnergyStorage> loEnergyStorage;
-
 
 	public CoalGeneratorTileEntity(TileEntityType<?> tileEntityType) {
 		super(tileEntityType);
-		this.energyStorage = new ModEnergyStorage(this, 10000, 0, 50);
+		this.energyStorage = new ModEnergyStorage(this, 8192, 0, 32);
 		this.loEnergyStorage = LazyOptional.of(() -> this.energyStorage);
 		this.isEmpty();
 	}
@@ -72,6 +74,10 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 
 	public static int getBurnTime(ItemStack stack) {
 		return ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING);
+	}
+	
+	public int getProductionRate() {
+		return 32;
 	}
 	
 	@Override
@@ -128,10 +134,6 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 		this.energyStorage.setEnergy(compound.getInt("Energy"));
 		super.load(state, compound);
 	}
-	
-	public void outputEnergy() {
-		
-	}
 
 	@Override
 	public void tick() {
@@ -146,8 +148,9 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 			} else
 				this.maxProgress = 0;
 		}
+		
 		if (this.progress > 0) {
-			this.energyStorage.setEnergy(this.energyStorage.getEnergyStored() + 50);
+			this.energyStorage.setEnergy(this.energyStorage.getEnergyStored() + 32);
 			if (--progress == 0) {
 				ItemStack ash = this.getItem(1);
 				if (ash.isEmpty())
@@ -157,8 +160,29 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 			}
 			this.setChanged();
 		}
+		outputEnergy();
 	}
-
+	
+	public void outputEnergy() {
+		ArrayList<TileEntity> tes = new ArrayList<TileEntity>();
+		World world = this.getLevel();
+		tes.add(world.getBlockEntity(this.getBlockPos().north()));
+		tes.add(world.getBlockEntity(this.getBlockPos().east()));
+		tes.add(world.getBlockEntity(this.getBlockPos().south()));
+		tes.add(world.getBlockEntity(this.getBlockPos().west()));
+		tes.add(world.getBlockEntity(this.getBlockPos().above()));
+		tes.add(world.getBlockEntity(this.getBlockPos().below()));
+		for(TileEntity te : tes) {
+			if(te instanceof EnergyCableTileEntity) {
+				EnergyCableTileEntity master = ((EnergyCableTileEntity) te).getMaster();
+				if(master.getEnergy() != master.getMaxEnergy() && this.getEnergy() >= this.getProductionRate()) {
+					master.setEnergy(master.getEnergy() + this.getProductionRate());
+					this.energyStorage.setEnergy(this.getEnergy() - this.getProductionRate());
+				}
+			}
+		}
+	}
+	
 	@Override
 	public int getContainerSize() {
 		return slots;

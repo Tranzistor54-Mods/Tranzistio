@@ -1,0 +1,29 @@
+{
+    "multipart":[
+		{   "apply": {"model": "tranzistio:block/cable_models/copper_cable_default"}},
+		{
+			"when":  {"north": "true"},
+			"apply": {"model": "tranzistio:block/cable_models/copper_cable_half", "uvlock": false}
+		},
+		{
+			"when":  {"east": "true"},
+			"apply": {"model": "tranzistio:block/cable_models/copper_cable_half", "y": 90, "uvlock": false}
+		},
+		{
+			"when":  {"south": "true"},
+			"apply": {"model": "tranzistio:block/cable_models/copper_cable_half", "y": 180, "uvlock": false}
+		},
+		{
+			"when":  {"west": "true"},
+			"apply": {"model": "tranzistio:block/cable_models/copper_cable_half", "y": 270, "uvlock": false}
+		},
+		{
+			"when":  {"down": "true"},
+			"apply": {"model": "tranzistio:block/cable_models/copper_cable_half", "x": 90, "uvlock": false}
+		},
+		{
+			"when":  {"up": "true"},
+			"apply": {"model": "tranzistio:block/cable_models/copper_cable_half", "x": 270, "uvlock": false}
+		}	
+    ]    
+}

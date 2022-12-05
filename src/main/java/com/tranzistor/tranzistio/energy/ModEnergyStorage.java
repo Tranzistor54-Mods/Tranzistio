@@ -62,6 +62,15 @@ public class ModEnergyStorage extends EnergyStorage{
 	    	this.energy = Math.max(0, Math.min(energy, this.capacity));
 	    }
 	    
+	    public void setCapacity(int capacity) {
+	    	this.capacity = capacity;
+	    }
+	    
+	    public void setTransferRate(int transferRate) {
+	    	this.maxExtract = transferRate;
+	    	this.maxReceive = transferRate;
+	    }
+	    
 	    
 	    
 }

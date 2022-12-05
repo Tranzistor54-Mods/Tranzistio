@@ -5,6 +5,11 @@
 	"block.tranzistio.coal_generator": "Coal Generator",
 	"item.tranzistio.ash": "Ash",
 	"block.tranzistio.electric_furnace": "Electrical Furnace",
+	"item.tranzistio.hammer": "Hammer",
+	"item.tranzistio.hammered_iron_ore": "Crushed Iron Ore",
+	"item.tranzistio.destroyer": "Destroyer",
+	"block.tranzistio.copper_cable": "Copper Cable",
+	
 	
 	
 	"itemGroup.tranzistio": "Tranzistio Mod Items"

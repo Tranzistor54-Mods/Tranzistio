@@ -6,7 +6,7 @@ import com.tranzistor.tranzistio.Tranzistio;
 import com.tranzistor.tranzistio.core.itemGroup.TranzistioItemGroup;
 import com.tranzistor.tranzistio.core.machines.CoalGenerator;
 import com.tranzistor.tranzistio.core.machines.ElectricFurnace;
-
+import com.tranzistor.tranzistio.energy.EnergyCableBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -35,6 +35,10 @@ public class BlockInit  {
 	
 	public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlock("electric_furnace", () -> new ElectricFurnace(AbstractBlock.Properties.of(Material.METAL)
 			.strength(5f, 6f).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+	
+	public static final RegistryObject<Block> COPPER_CABLE = registerBlock("copper_cable", () -> new EnergyCableBlock(0.125f, AbstractBlock.Properties.of(Material.METAL)
+			.strength(5f, 6f).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.METAL), 0));
+	
 	
 	private static <T extends Block>RegistryObject<T> registerBlock (String name, Supplier<T> block){
 		RegistryObject<T> toReturn = BLOCKS.register(name, block);

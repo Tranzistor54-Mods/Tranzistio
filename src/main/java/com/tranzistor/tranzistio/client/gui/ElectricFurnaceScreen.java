@@ -8,7 +8,10 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ElectricFurnaceScreen extends ContainerScreen<ElectricFurnaceContainer> {
 	
 	private static final ResourceLocation ELECTRIC_FURNACE_SCREEN = new ResourceLocation(Tranzistio.MOD_ID, "textures/gui/electric_furnace.png");
@@ -28,7 +31,12 @@ public class ElectricFurnaceScreen extends ContainerScreen<ElectricFurnaceContai
 		this.minecraft.textureManager.bind(ELECTRIC_FURNACE_SCREEN);
 		int x = (this.width - this.imageWidth) / 2;
 		int y = (this.height - this.imageHeight) / 2;
-		this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageWidth);
+		this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
+		if(te.maxSmeltingProgress > 0) {
+			this.blit(matrixStack, this.leftPos +  79, this.topPos + 35, 176, 14, (te.maxSmeltingProgress - te.smeltingProgress) * 24 / te.maxSmeltingProgress, 16);
+		}
+		int energyPixels = te.getEnergy() * 50 / te.getMaxEnergy();
+		this.blit(matrixStack, this.leftPos + 163, this.topPos + 65 - energyPixels, 176, 82 - energyPixels, 7, energyPixels);
 	}
 	
 	@Override
