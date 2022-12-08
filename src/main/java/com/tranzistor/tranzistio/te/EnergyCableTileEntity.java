@@ -1,10 +1,11 @@
-package com.tranzistor.tranzistio.core.te;
+package com.tranzistor.tranzistio.te;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
+import com.tranzistor.tranzistio.init.TileEntityTypesInit;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;

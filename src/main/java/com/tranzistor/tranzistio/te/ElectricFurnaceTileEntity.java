@@ -1,13 +1,14 @@
-package com.tranzistor.tranzistio.core.te;
+package com.tranzistor.tranzistio.te;
 
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.tranzistor.tranzistio.Tranzistio;
-import com.tranzistor.tranzistio.core.containers.ElectricFurnaceContainer;
-import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
+import com.tranzistor.tranzistio.containers.ElectricFurnaceContainer;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
+import com.tranzistor.tranzistio.init.TileEntityTypesInit;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;

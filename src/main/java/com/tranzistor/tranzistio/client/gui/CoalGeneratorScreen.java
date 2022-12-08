@@ -2,8 +2,9 @@ package com.tranzistor.tranzistio.client.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tranzistor.tranzistio.Tranzistio;
-import com.tranzistor.tranzistio.core.containers.CoalGeneratorContainer;
-import com.tranzistor.tranzistio.core.te.CoalGeneratorTileEntity;
+import com.tranzistor.tranzistio.containers.CoalGeneratorContainer;
+import com.tranzistor.tranzistio.te.CoalGeneratorTileEntity;
+
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;

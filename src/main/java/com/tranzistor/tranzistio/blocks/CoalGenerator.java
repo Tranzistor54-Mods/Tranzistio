@@ -1,7 +1,8 @@
-package com.tranzistor.tranzistio.core.machines;
+package com.tranzistor.tranzistio.blocks;
 
-import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
-import com.tranzistor.tranzistio.core.te.ElectricFurnaceTileEntity;
+import com.tranzistor.tranzistio.init.TileEntityTypesInit;
+import com.tranzistor.tranzistio.te.CoalGeneratorTileEntity;
+
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,10 +24,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ElectricFurnace extends HorizontalBlock {
-
-	public ElectricFurnace(Properties prop) {
-		super(AbstractBlock.Properties.of(Material.METAL).strength(5f, 6f).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.METAL));
+public class CoalGenerator extends HorizontalBlock {
+	
+	public CoalGenerator() {
+		super(AbstractBlock.Properties.of(Material.METAL).strength(5f, 6f).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.METAL).noOcclusion());
 	}
 	
 	@Override
@@ -47,7 +48,7 @@ public class ElectricFurnace extends HorizontalBlock {
 	
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return TileEntityTypesInit.ELECTRIC_FURNACE_TILE_ENTITY.get().create();
+		return TileEntityTypesInit.COAL_GENERATOR_TILE_ENTITY.get().create();
 	}
 	
 	@Override
@@ -56,8 +57,8 @@ public class ElectricFurnace extends HorizontalBlock {
 			return ActionResultType.SUCCESS;
 		} else {
 			TileEntity te = world.getBlockEntity(pos);
-			if(te instanceof ElectricFurnaceTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (ElectricFurnaceTileEntity) te, pos);
+			if(te instanceof CoalGeneratorTileEntity) {
+				NetworkHooks.openGui((ServerPlayerEntity) player, (CoalGeneratorTileEntity) te, pos);
 			}
 			return ActionResultType.CONSUME;
 		}
@@ -67,8 +68,8 @@ public class ElectricFurnace extends HorizontalBlock {
 	@Override
 	public void onRemove(BlockState oldBlockstate, World world, BlockPos blockpos, BlockState newBlockstate, boolean isMoving) {
 		TileEntity tileentity = world.getBlockEntity(blockpos);
-		if (tileentity instanceof ElectricFurnaceTileEntity) {
-			InventoryHelper.dropContents(world, blockpos, (ElectricFurnaceTileEntity)tileentity);
+		if (tileentity instanceof CoalGeneratorTileEntity) {
+			InventoryHelper.dropContents(world, blockpos, (CoalGeneratorTileEntity)tileentity);
 		}
 		super.onRemove(oldBlockstate, world, blockpos, newBlockstate, isMoving);
 	}

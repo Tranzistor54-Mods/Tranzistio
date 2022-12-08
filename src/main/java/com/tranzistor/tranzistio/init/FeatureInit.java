@@ -1,4 +1,4 @@
-package com.tranzistor.tranzistio.core.init;
+package com.tranzistor.tranzistio.init;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.world.gen.GenerationStage;

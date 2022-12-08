@@ -3,40 +3,29 @@ package com.tranzistor.tranzistio.energy;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
-import com.tranzistor.tranzistio.core.machines.CoalGenerator;
-import com.tranzistor.tranzistio.core.machines.ElectricFurnace;
-import com.tranzistor.tranzistio.core.te.EnergyCableTileEntity;
-import net.minecraft.block.AbstractBlock;
+import com.tranzistor.tranzistio.blocks.CoalGenerator;
+import com.tranzistor.tranzistio.blocks.ElectricFurnace;
+import com.tranzistor.tranzistio.init.TileEntityTypesInit;
+import com.tranzistor.tranzistio.te.EnergyCableTileEntity;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
 
 public class EnergyCableBlock extends SixWayBlock{
 	
 	public final int indexOfType;
-	public static final BooleanProperty NORTH = BooleanProperty.create("north");
-	public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-	public static final BooleanProperty WEST = BooleanProperty.create("west");
-	public static final BooleanProperty EAST = BooleanProperty.create("east");
-	public static final BooleanProperty UP = BooleanProperty.create("up");
-	public static final BooleanProperty DOWN = BooleanProperty.create("down");
 	
 	public EnergyCableBlock(float index, Properties prop, int indexOfType) {
-		super(index, AbstractBlock.Properties.of(Material.METAL).strength(5f, 6f).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.METAL).noOcclusion());
+		super(index, prop.noOcclusion());
 		this.indexOfType = indexOfType;
 		this.registerDefaultState(this.stateDefinition.any()
 				.setValue(NORTH, Boolean.valueOf(false))

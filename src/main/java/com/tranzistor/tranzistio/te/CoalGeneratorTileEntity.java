@@ -1,10 +1,10 @@
-package com.tranzistor.tranzistio.core.te;
+package com.tranzistor.tranzistio.te;
 
 import com.tranzistor.tranzistio.Tranzistio;
-import com.tranzistor.tranzistio.core.containers.CoalGeneratorContainer;
-import com.tranzistor.tranzistio.core.init.ItemInit;
-import com.tranzistor.tranzistio.core.init.TileEntityTypesInit;
+import com.tranzistor.tranzistio.containers.CoalGeneratorContainer;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
+import com.tranzistor.tranzistio.init.ItemInit;
+import com.tranzistor.tranzistio.init.TileEntityTypesInit;
 
 import java.util.ArrayList;
 

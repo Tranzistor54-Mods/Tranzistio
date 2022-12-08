@@ -1,11 +1,11 @@
-package com.tranzistor.tranzistio.core.advancedItems;
+package com.tranzistor.tranzistio.items;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class Hammer extends Item {
+public class CraftDamageable extends Item {
 
-	public Hammer(Properties properties) {
+	public CraftDamageable(Properties properties) {
 		super(properties);
 	}
 	

@@ -1,9 +1,11 @@
-package com.tranzistor.tranzistio.core.containers;
+package com.tranzistor.tranzistio.containers;
 
 import java.util.Objects;
-import com.tranzistor.tranzistio.core.init.BlockInit;
-import com.tranzistor.tranzistio.core.init.ContainersInit;
-import com.tranzistor.tranzistio.core.te.ElectricFurnaceTileEntity;
+
+import com.tranzistor.tranzistio.init.BlockInit;
+import com.tranzistor.tranzistio.init.ContainersInit;
+import com.tranzistor.tranzistio.te.ElectricFurnaceTileEntity;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
