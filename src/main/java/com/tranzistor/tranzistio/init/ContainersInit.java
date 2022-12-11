@@ -11,10 +11,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ContainersInit {
-	public static DeferredRegister<ContainerType<?>> CONTAINERS = 
+	public static final DeferredRegister<ContainerType<?>> CONTAINERS = 
 			DeferredRegister.create(ForgeRegistries.CONTAINERS, Tranzistio.MOD_ID);
 	
-	public static RegistryObject<ContainerType<CoalGeneratorContainer>> COAL_GENERATOR = CONTAINERS.register("coal_generator_container", () -> IForgeContainerType.create(CoalGeneratorContainer::new));
-	public static RegistryObject<ContainerType<ElectricFurnaceContainer>> ELECTRIC_FURNACE = CONTAINERS.register("electric_furnace_container", () -> IForgeContainerType.create(ElectricFurnaceContainer::new));
+	public static final RegistryObject<ContainerType<CoalGeneratorContainer>> COAL_GENERATOR = CONTAINERS.register("coal_generator_container", () -> IForgeContainerType.create(CoalGeneratorContainer::new));
+	public static final RegistryObject<ContainerType<ElectricFurnaceContainer>> ELECTRIC_FURNACE = CONTAINERS.register("electric_furnace_container", () -> IForgeContainerType.create(ElectricFurnaceContainer::new));
 
 }

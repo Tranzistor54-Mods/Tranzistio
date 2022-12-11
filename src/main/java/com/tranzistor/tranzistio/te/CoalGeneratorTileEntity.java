@@ -2,14 +2,15 @@ package com.tranzistor.tranzistio.te;
 
 import com.tranzistor.tranzistio.Tranzistio;
 import com.tranzistor.tranzistio.containers.CoalGeneratorContainer;
+import com.tranzistor.tranzistio.energy.ISidedEnergyContainer;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
+import com.tranzistor.tranzistio.init.BlockInit;
 import com.tranzistor.tranzistio.init.ItemInit;
 import com.tranzistor.tranzistio.init.TileEntityTypesInit;
 
-import java.util.ArrayList;
-
 import javax.annotation.Nonnull;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -21,13 +22,11 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -35,7 +34,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.IItemHandler;
 
 
-public class CoalGeneratorTileEntity extends LockableLootTileEntity implements ITickableTileEntity, ISidedInventory {
+public class CoalGeneratorTileEntity extends LockableLootTileEntity implements ITickableTileEntity, ISidedInventory, ISidedEnergyContainer {
 	
 	public final ModEnergyStorage energyStorage;
 	public static int slots = 2;
@@ -62,14 +61,6 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 
 	public int getProgress() {
 		return this.progress;
-	}
-
-	public int getEnergy() {
-		return this.energyStorage.getEnergyStored();
-	}
-
-	public int getMaxEnergy() {
-		return this.energyStorage.getMaxEnergyStored();
 	}
 
 	public static int getBurnTime(ItemStack stack) {
@@ -104,7 +95,7 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if(cap == CapabilityEnergy.ENERGY) {
+		if(cap == CapabilityEnergy.ENERGY && this.canOutputEnergy(side)) {
 			return this.loEnergyStorage.cast();
 		}
 		return super.getCapability(cap, side);
@@ -122,7 +113,7 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 		ItemStackHelper.saveAllItems(compound, this.items);
 		compound.putInt("Progress", this.progress);
 		compound.putInt("MaxProgress", this.maxProgress);
-		compound.putInt("Energy", this.getEnergy());
+		compound.putInt("Energy", this.energyStorage.getEnergyStored());
 		return super.save(compound);
 	}
 
@@ -150,7 +141,7 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 		}
 		
 		if (this.progress > 0) {
-			this.energyStorage.setEnergy(this.energyStorage.getEnergyStored() + 32);
+			this.energyStorage.setEnergy(this.energyStorage.getEnergyStored() + getProductionRate());
 			if (--progress == 0) {
 				ItemStack ash = this.getItem(1);
 				if (ash.isEmpty())
@@ -160,27 +151,7 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 			}
 			this.setChanged();
 		}
-		outputEnergy();
-	}
-	
-	public void outputEnergy() {
-		ArrayList<TileEntity> tes = new ArrayList<TileEntity>();
-		World world = this.getLevel();
-		tes.add(world.getBlockEntity(this.getBlockPos().north()));
-		tes.add(world.getBlockEntity(this.getBlockPos().east()));
-		tes.add(world.getBlockEntity(this.getBlockPos().south()));
-		tes.add(world.getBlockEntity(this.getBlockPos().west()));
-		tes.add(world.getBlockEntity(this.getBlockPos().above()));
-		tes.add(world.getBlockEntity(this.getBlockPos().below()));
-		for(TileEntity te : tes) {
-			if(te instanceof EnergyCableTileEntity) {
-				EnergyCableTileEntity master = ((EnergyCableTileEntity) te).getMaster();
-				if(master.getEnergy() != master.getMaxEnergy() && this.getEnergy() >= this.getProductionRate()) {
-					master.setEnergy(master.getEnergy() + this.getProductionRate());
-					this.energyStorage.setEnergy(this.getEnergy() - this.getProductionRate());
-				}
-			}
-		}
+		this.energyStorage.transferEnergyAround();
 	}
 	
 	@Override
@@ -238,6 +209,17 @@ public class CoalGeneratorTileEntity extends LockableLootTileEntity implements I
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		this.load(null, pkt.getTag());
+	}
+
+	@Override
+	public boolean canReceiveEnergy(Direction direction) {
+		return false;
+	}
+
+	@Override
+	public boolean canOutputEnergy(Direction direction) {
+		BlockState state = this.getLevel().getBlockState(this.getBlockPos());
+		return state.getBlock() == BlockInit.COAL_GENERATOR.get() && state.getValue(HorizontalBlock.FACING) != direction;
 	}
 }
 
