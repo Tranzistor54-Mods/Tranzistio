@@ -70,10 +70,8 @@ public class EnergyCable extends SixWayBlock {
 			te.getCapability(CapabilityEnergy.ENERGY, direction.getOpposite()).ifPresent(newES -> {
 				if (!newES.canReceive()) return;
 				EnergyNetwork.traverse(world, pos, Arrays.asList(Direction.values()), this.getTransferRate(), null, (es, rate) -> {
-					if (es instanceof ModEnergyStorage && es.canExtract()) {
-						System.out.println("From shape");
+					if (es instanceof ModEnergyStorage && es.canExtract())
 						((ModEnergyStorage)es).addReceiver(newES, rate);
-					}
 				});
 			});
 		}
@@ -84,7 +82,6 @@ public class EnergyCable extends SixWayBlock {
 	@Override
 	public void onRemove(BlockState oldState, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (newState.getBlock() == this) return;
-		//System.out.println("Fired: "+pos+", "+newState.getBlock()+", "+Boolean.toString(isMoving));
 		EnergyNetwork.refresh(world, pos, pos);
 		super.onRemove(oldState, world, pos, newState, isMoving);
 	}
@@ -93,7 +90,6 @@ public class EnergyCable extends SixWayBlock {
 	@Override
 	public void onPlace(BlockState oldState, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (newState.getBlock() == this) return;
-		//System.out.println("Fired: "+pos+", "+newState.getBlock()+", "+Boolean.toString(isMoving));
 		EnergyNetwork.refresh(world, pos, null);
 		super.onPlace(oldState, world, pos, newState, isMoving);
 	}

@@ -97,14 +97,12 @@ public class ModEnergyStorage extends EnergyStorage {
 	    public void refreshReceiversCache(BlockPos ignorePos) {
 	    	this.receivers_cache = new HashMap<>();
 			EnergyNetwork.traverse(tileEntity.getLevel(), tileEntity.getBlockPos(), this.getOutputDirections(), this.maxExtract, ignorePos, this::addReceiver);
-			System.out.println("Cache refreshed and now has "+this.receivers_cache.size()+" receivers");
 		}
 	    
 	    public void addReceiver(IEnergyStorage target, Integer maxTransferRate) {
 	    	if (receivers_cache == null ||(receivers_cache.containsKey(target) && receivers_cache.get(target) >= maxTransferRate) || !target.canReceive() || target == this)
 	    		return;
 	    	receivers_cache.put(target, maxTransferRate);
-			System.out.println("New receiver "+target.getEnergyStored()+" in the cache which now has "+this.receivers_cache.size()+" receivers");
 	    }
 	    
 	    public void readFromNBT(CompoundNBT compound) {
