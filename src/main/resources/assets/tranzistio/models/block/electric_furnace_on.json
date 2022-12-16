@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "tranzistio:blocks/machine_side",
-		"2": "tranzistio:blocks/electric_furnace_off_face",
+		"2": "tranzistio:blocks/electric_furnace_on_face",
 		"particle": "tranzistio:blocks/machine_side"
 	},
 	"elements": [
@@ -19,31 +19,5 @@
 				"down": {"uv": [16, 0, 0, 16], "texture": "#1"}
 			}
 		}
-	],
-	"display": {
-		"thirdperson_righthand": {
-			"rotation": [73.25, 0, 0],
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"thirdperson_lefthand": {
-			"rotation": [73.25, 0, 0],
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"firstperson_righthand": {
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"firstperson_lefthand": {
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"ground": {
-			"scale": [0.3, 0.3, 0.3]
-		},
-		"gui": {
-			"rotation": [-163, 30, 179.75],
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"fixed": {
-			"scale": [0.5, 0.5, 0.5]
-		}
-	}
+	]
 }

@@ -2,6 +2,7 @@ package com.tranzistor.tranzistio;
 
 import com.tranzistor.tranzistio.client.gui.CoalGeneratorScreen;
 import com.tranzistor.tranzistio.client.gui.ElectricFurnaceScreen;
+import com.tranzistor.tranzistio.client.gui.CrusherScreen;
 import com.tranzistor.tranzistio.init.ContainersInit;
 
 import net.minecraft.client.gui.ScreenManager;
@@ -18,6 +19,7 @@ public class ClientEventBusSubscriber {
 	public static void clientSetup(FMLClientSetupEvent event) {
 		ScreenManager.register(ContainersInit.COAL_GENERATOR.get(), CoalGeneratorScreen::new);
 		ScreenManager.register(ContainersInit.ELECTRIC_FURNACE.get(), ElectricFurnaceScreen::new);
+		ScreenManager.register(ContainersInit.CRUSHER.get(), CrusherScreen::new);
 	}
 
 }

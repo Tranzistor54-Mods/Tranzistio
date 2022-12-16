@@ -1,7 +1,7 @@
 package com.tranzistor.tranzistio.blocks;
 
 import com.tranzistor.tranzistio.init.TileEntityTypesInit;
-import com.tranzistor.tranzistio.te.ElectricFurnaceTileEntity;
+import com.tranzistor.tranzistio.te.CrusherTileEntity;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -15,7 +15,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -26,9 +26,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ElectricFurnace extends HorizontalBlock {
+public class Crusher extends HorizontalBlock {
 	public static final BooleanProperty WORKING = BooleanProperty.create("working");
-	public ElectricFurnace() {
+	public Crusher() {
 		super(AbstractBlock.Properties.of(Material.METAL).strength(5f, 6f).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.METAL));
 	}
 	
@@ -38,9 +38,9 @@ public class ElectricFurnace extends HorizontalBlock {
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-	    super.createBlockStateDefinition(builder);	
-	    builder.add(FACING, WORKING);
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
+		builder.add(FACING, WORKING);
 	}
 	
 	@Override
@@ -50,7 +50,7 @@ public class ElectricFurnace extends HorizontalBlock {
 	
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return TileEntityTypesInit.ELECTRIC_FURNACE_TILE_ENTITY.get().create();
+		return TileEntityTypesInit.CRUSHER_TILE_ENTITY.get().create();
 	}
 	
 	@Override
@@ -59,8 +59,8 @@ public class ElectricFurnace extends HorizontalBlock {
 			return ActionResultType.SUCCESS;
 		} else {
 			TileEntity te = world.getBlockEntity(pos);
-			if(te instanceof ElectricFurnaceTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) player, (ElectricFurnaceTileEntity) te, pos);
+			if(te instanceof CrusherTileEntity) {
+				NetworkHooks.openGui((ServerPlayerEntity) player, (CrusherTileEntity) te, pos);
 			}
 			return ActionResultType.CONSUME;
 		}
@@ -76,8 +76,8 @@ public class ElectricFurnace extends HorizontalBlock {
 	public void onRemove(BlockState oldBlockstate, World world, BlockPos blockpos, BlockState newBlockstate, boolean isMoving) {
 		if(!oldBlockstate.is(newBlockstate.getBlock())) {
 			TileEntity tileentity = world.getBlockEntity(blockpos);
-			if (tileentity instanceof ElectricFurnaceTileEntity) {
-				InventoryHelper.dropContents(world, blockpos, (ElectricFurnaceTileEntity)tileentity);
+			if (tileentity instanceof CrusherTileEntity) {
+				InventoryHelper.dropContents(world, blockpos, (CrusherTileEntity)tileentity);
 			}
 			super.onRemove(oldBlockstate, world, blockpos, newBlockstate, isMoving);
 		}

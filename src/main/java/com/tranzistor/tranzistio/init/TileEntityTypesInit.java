@@ -2,6 +2,7 @@ package com.tranzistor.tranzistio.init;
 
 import com.tranzistor.tranzistio.Tranzistio;
 import com.tranzistor.tranzistio.te.CoalGeneratorTileEntity;
+import com.tranzistor.tranzistio.te.CrusherTileEntity;
 import com.tranzistor.tranzistio.te.ElectricFurnaceTileEntity;
 
 import net.minecraft.tileentity.TileEntityType;
@@ -18,4 +19,7 @@ public class TileEntityTypesInit {
 	
 	public static final RegistryObject<TileEntityType<ElectricFurnaceTileEntity>> ELECTRIC_FURNACE_TILE_ENTITY = TILE_ENTITY_TYPE.register("electric_furnace_tile_entity", 
 			()  -> TileEntityType.Builder.of(ElectricFurnaceTileEntity::new, BlockInit.ELECTRIC_FURNACE.get()).build(null));
+	
+	public static final RegistryObject<TileEntityType<CrusherTileEntity>> CRUSHER_TILE_ENTITY = TILE_ENTITY_TYPE.register("crusher_tile_entity", 
+			()  -> TileEntityType.Builder.of(CrusherTileEntity::new, BlockInit.CRUSHER.get()).build(null));
 }

@@ -3,12 +3,12 @@ package com.tranzistor.tranzistio.te;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.tranzistor.tranzistio.Tranzistio;
+import com.tranzistor.tranzistio.blocks.ElectricFurnace;
 import com.tranzistor.tranzistio.containers.ElectricFurnaceContainer;
 import com.tranzistor.tranzistio.energy.ISidedEnergyContainer;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
 import com.tranzistor.tranzistio.init.BlockInit;
 import com.tranzistor.tranzistio.init.TileEntityTypesInit;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerInventory;
@@ -75,17 +75,18 @@ public class ElectricFurnaceTileEntity extends LockableLootTileEntity
 	@SuppressWarnings("unchecked")
 	@Override
 	public void tick() {
-		IRecipe<?> iRecipe = this.level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, this.level)
-				.orElse(null);
+		IRecipe<?> iRecipe = this.level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, this, this.level).orElse(null);
 		boolean isNotFull = this.items.get(1).getCount() < this.getMaxStackSize();
 		ItemStack itemStack = this.items.get(0);
-		inputEnergy();
 		if (this.smeltingProgress == 0) {
 			if (canSmelt(iRecipe) && isNotFull && this.energyStorage.getEnergyStored() > this.getConsumeEnergyRate()) {
 				this.maxSmeltingProgress = (int) (this.getTotalCookTime() * 0.8) / 10;
 				this.smeltingProgress = (int) (this.getTotalCookTime() * 0.8) / 10;
-			} else
+				this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(ElectricFurnace.WORKING, true), 3);
+			} else {
 				this.maxSmeltingProgress = 0;
+				this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(ElectricFurnace.WORKING, false), 3);
+			  }
 		}
 
 		if (this.smeltingProgress > 0 && this.energyStorage.spendEnergy(this.getConsumeEnergyRate())) {
@@ -106,29 +107,9 @@ public class ElectricFurnaceTileEntity extends LockableLootTileEntity
 		}
 	}
 
-	public void inputEnergy() {
-		/*
-		 * ArrayList<TileEntity> tes = new ArrayList<TileEntity>(); World world =
-		 * this.getLevel(); tes.add(world.getBlockEntity(this.getBlockPos().north()));
-		 * tes.add(world.getBlockEntity(this.getBlockPos().east()));
-		 * tes.add(world.getBlockEntity(this.getBlockPos().south()));
-		 * tes.add(world.getBlockEntity(this.getBlockPos().west()));
-		 * tes.add(world.getBlockEntity(this.getBlockPos().above()));
-		 * tes.add(world.getBlockEntity(this.getBlockPos().below()));
-		 * 
-		 * for(TileEntity te : tes) { if(te instanceof EnergyCableTileEntity) {
-		 * EnergyCableTileEntity master = ((EnergyCableTileEntity) te).getMaster();
-		 * if(master.getEnergy() >= this.getConsumeEnergyRate() && this.getEnergy() !=
-		 * this.getMaxEnergy()) { master.setEnergy(master.getEnergy() -
-		 * this.getConsumeEnergyRate()); this.energyStorage.setEnergy(this.getEnergy() +
-		 * this.getConsumeEnergyRate()); } } }
-		 */
-
-	}
-
 	@SuppressWarnings("unchecked")
 	private boolean canSmelt(@Nullable IRecipe<?> iRecipe) {
-		if (this.items.get(0).isEmpty() || iRecipe == null)
+		if (this.items.get(0).isEmpty() || iRecipe == null || this.energyStorage.getEnergyStored() < this.getConsumeEnergyRate())
 			return false;
 		ItemStack itemstack = ((IRecipe<ISidedInventory>) iRecipe).assemble(this);
 		if (itemstack.isEmpty())

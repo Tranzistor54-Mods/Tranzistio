@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.tranzistor.tranzistio.Tranzistio;
 import com.tranzistor.tranzistio.blocks.CoalGenerator;
+import com.tranzistor.tranzistio.blocks.Crusher;
 import com.tranzistor.tranzistio.blocks.ElectricFurnace;
 import com.tranzistor.tranzistio.blocks.EnergyCable;
 
@@ -30,8 +31,8 @@ public class BlockInit  {
 					.strength(5f, 6f).harvestLevel(3).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.STONE)));
 	
 	public static final RegistryObject<Block> COAL_GENERATOR = registerBlock("coal_generator", () -> new CoalGenerator());
-	
 	public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlock("electric_furnace", () -> new ElectricFurnace());
+	public static final RegistryObject<Block> CRUSHER = registerBlock("crusher", () -> new Crusher());
 	
 	public static final RegistryObject<Block> COPPER_CABLE = registerBlock("copper_cable", () -> new EnergyCable(0.125f, AbstractBlock.Properties.of(Material.METAL)
 			.strength(5f, 6f).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.METAL), 1024));

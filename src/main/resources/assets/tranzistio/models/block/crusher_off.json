@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "tranzistio:blocks/machine_side",
-		"2": "tranzistio:blocks/electric_furnace_off_face",
+		"2": "tranzistio:blocks/crusher_face_off",
 		"particle": "tranzistio:blocks/machine_side"
 	},
 	"elements": [
