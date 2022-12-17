@@ -1,0 +1,11 @@
+{
+ "type": "tranzistio:crushing",
+ "ingredient": [
+   {
+    "item": "minecraft:iron_ore"
+   }
+  ],
+ "result": {"item": "tranzistio:hammered_iron_ore"},
+ "count": 2,
+ "crushingtime": 350
+}

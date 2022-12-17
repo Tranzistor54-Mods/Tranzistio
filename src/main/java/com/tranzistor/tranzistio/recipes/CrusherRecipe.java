@@ -35,7 +35,7 @@ public class CrusherRecipe implements ICrusherRecipe {
 	@Override
 	public boolean matches(IInventory inv, World world) {
 		if(recipeItems.get(0).test(inv.getItem(0))) {
-			return recipeItems.get(1).test(inv.getItem(1));
+			return recipeItems.get(0).test(inv.getItem(0));
 		}
 		return false;
 	}
@@ -82,9 +82,9 @@ public class CrusherRecipe implements ICrusherRecipe {
 			ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
 			int crushingTime = JSONUtils.getAsInt(json, "crushingtime");
 			int count = JSONUtils.getAsInt(json, "count");
-			JsonArray ingredients = JSONUtils.getAsJsonArray(json, "ingredients");
+			JsonArray ingredient = JSONUtils.getAsJsonArray(json, "ingredient");
 			NonNullList<Ingredient> input = NonNullList.withSize(1, Ingredient.EMPTY);
-			input.set(0, Ingredient.fromJson(ingredients.get(0)));
+			input.set(0, Ingredient.fromJson(ingredient.get(0)));
 			
 			return new CrusherRecipe(id, result, input, crushingTime, count);
 		}

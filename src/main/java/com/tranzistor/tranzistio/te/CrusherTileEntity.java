@@ -1,6 +1,7 @@
 package com.tranzistor.tranzistio.te;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.tranzistor.tranzistio.Tranzistio;
 import com.tranzistor.tranzistio.containers.CrusherContainer;
@@ -101,10 +102,54 @@ public class CrusherTileEntity extends LockableLootTileEntity implements ITickab
 		super.load(state, compound);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void tick() {
 		IRecipe<?> iRecipe = this.level.getRecipeManager().getRecipeFor(RecipesTypeInit.CRUSHING_RECIPE, this, this.level).orElse(null);
+		boolean isNotFull = this.items.get(1).getCount() + this.getCountOfResult() < this.getMaxStackSize();
+		ItemStack itemStack = this.items.get(0);
+		if(this.crushingProgress == 0) {
+			if(canCrush(iRecipe) && isNotFull && this.energyStorage.getEnergyStored() > this.getConsumeEnergyRate()) {
+				this.maxCrushingProgress = this.getTotalCrushingTime();
+				this.crushingProgress = this.getTotalCrushingTime();
+			}
+			else {
+				this.maxCrushingProgress = 0;
+			}
+		}
 		
+		if(this.crushingProgress > 0 && this.energyStorage.spendEnergy(this.getConsumeEnergyRate())) {
+			if(--crushingProgress == 0 && !itemStack.isEmpty()) {
+				ItemStack itemStack1 = ((IRecipe<ISidedInventory>) iRecipe).assemble(this);
+				ItemStack itemStack2 = this.items.get(1);
+				itemStack.shrink(1);
+				if(itemStack2.isEmpty()) 
+					this.setItem(1, itemStack1.copy());
+				else if(isNotFull)
+					itemStack2.grow(this.getCountOfResult());
+			}
+			if(itemStack.isEmpty()) {
+				this.maxCrushingProgress = 0;
+				this.crushingProgress = 0;
+			}
+			this.setChanged();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean canCrush(@Nullable IRecipe<?> iRecipe) {
+		if (this.items.get(0).isEmpty() || iRecipe == null || this.energyStorage.getEnergyStored() < this.getConsumeEnergyRate())
+			return false;
+		ItemStack itemstack = ((IRecipe<ISidedInventory>) iRecipe).assemble(this);
+		if (itemstack.isEmpty())
+			return false;
+		ItemStack itemstack1 = this.items.get(1);
+		if (itemstack1.isEmpty())
+			return true;
+		if (!itemstack1.sameItem(itemstack))
+			return false;
+		int resultAmount = itemstack1.getCount() + itemstack.getCount() * this.getCountOfResult();
+		return resultAmount <= this.getMaxStackSize() && resultAmount <= itemstack1.getMaxStackSize();
 	}
 	
 	public int getTotalCrushingTime() {
@@ -114,6 +159,10 @@ public class CrusherTileEntity extends LockableLootTileEntity implements ITickab
 	
 	public int getCountOfResult() {
 		return this.level.getRecipeManager().getRecipeFor(RecipesTypeInit.CRUSHING_RECIPE, this, this.level).map(CrusherRecipe::getCount).orElse(1);
+	}
+	
+	public int getConsumeEnergyRate() {
+		return 32;
 	}
 
 	@Override
