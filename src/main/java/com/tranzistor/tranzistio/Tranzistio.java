@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.tranzistor.tranzistio.init.BlockInit;
 import com.tranzistor.tranzistio.init.ContainersInit;
 import com.tranzistor.tranzistio.init.FeatureInit;
+import com.tranzistor.tranzistio.init.FluidInit;
 import com.tranzistor.tranzistio.init.ItemInit;
 import com.tranzistor.tranzistio.init.RecipesTypeInit;
 import com.tranzistor.tranzistio.init.TileEntityTypesInit;
@@ -38,14 +39,13 @@ public class Tranzistio {
     public Tranzistio() {
     	IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
     	
-    	for (DeferredRegister<?> register : new DeferredRegister[] {ItemInit.ITEMS, BlockInit.BLOCKS, TileEntityTypesInit.TILE_ENTITY_TYPE, ContainersInit.CONTAINERS})
+    	for (DeferredRegister<?> register : new DeferredRegister[] {ItemInit.ITEMS, BlockInit.BLOCKS, TileEntityTypesInit.TILE_ENTITY_TYPE, ContainersInit.CONTAINERS, FluidInit.FLUIDS})
     		register.register(bus);
     	RecipesTypeInit.register(bus);
     	
     	MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, FeatureInit::addOres);
     	ModNetwork.init();
     }
-   
 }  
    
 

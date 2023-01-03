@@ -10,6 +10,14 @@
 	"item.tranzistio.destroyer": "Destroyer",
 	"block.tranzistio.copper_cable": "Copper Cable",
 	"block.tranzistio.crusher": "Electrical Crusher",
+	"block.tranzistio.fluid_filler": "Electrical Liquid Filler",
+	"fluid.tranzistio.epoxy_resin": "Epoxy Resin",
+	"fluid.tranzistio.epoxy_resin_still": "Epoxy Resin",
+	"item.tranzistio.electrical_lamp": "Vacuum Electrical Lamp",
+	"item.tranzistio.epoxy_resin_bucket": "Bucket Of Epoxy Resin",
+	"item.tranzistio.glass_dust": "Glass Dust",
+	"item.tranzistio.copper_foil": "Copper Foil",
+	"item.tranzistio.compressed_organic_fiber": "Compressed Organic Fiber",
 	
 	
 	

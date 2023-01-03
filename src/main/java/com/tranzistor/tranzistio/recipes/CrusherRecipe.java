@@ -99,7 +99,6 @@ public class CrusherRecipe implements ICrusherRecipe {
 
 		@Override
 		public void toNetwork(PacketBuffer buffer, CrusherRecipe recipe) {
-			buffer.writeInt(recipe.getIngredients().size());
 			Ingredient ing = recipe.getIngredients().get(0);
 			ing.toNetwork(buffer);
 			buffer.writeItemStack(recipe.getResultItem(), false);

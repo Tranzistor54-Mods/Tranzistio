@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.tranzistor.tranzistio.Tranzistio;
+import com.tranzistor.tranzistio.blocks.Crusher;
 import com.tranzistor.tranzistio.containers.CrusherContainer;
 import com.tranzistor.tranzistio.energy.ISidedEnergyContainer;
 import com.tranzistor.tranzistio.energy.ModEnergyStorage;
@@ -37,20 +38,22 @@ import net.minecraftforge.items.IItemHandler;
 
 public class CrusherTileEntity extends LockableLootTileEntity implements ITickableTileEntity, ISidedInventory, ISidedEnergyContainer {
 
-	public final ModEnergyStorage energyStorage = new ModEnergyStorage(this, 8192, 32, 0);
-	private LazyOptional<ModEnergyStorage> loEnergyStorage = LazyOptional.of(() -> this.energyStorage);
+	public final ModEnergyStorage energyStorage;// = new ModEnergyStorage(this, 8192, 32, 0);
+	private LazyOptional<ModEnergyStorage> loEnergyStorage;//= LazyOptional.of(() -> this.energyStorage);
 	public static int slots = 2;
 	public int crushingProgress = 0, maxCrushingProgress = 0;
 	private static final int[] ENTER_SLOT = new int[] { 0 };
 	private static final int[] EXIT_SLOT = new int[] { 1 };
 	protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 	
-	protected CrusherTileEntity(TileEntityType<?> te) {
+	protected CrusherTileEntity(TileEntityType<?> te, int capacity, int consumeRate) {
 		super(te);
+		this.energyStorage = new ModEnergyStorage(this, capacity, consumeRate, 0);
+		this.loEnergyStorage = LazyOptional.of(() -> this.energyStorage);
 	}
 	
-	public CrusherTileEntity() {
-		this(TileEntityTypesInit.CRUSHER_TILE_ENTITY.get());
+	public CrusherTileEntity(int capacity, int consumeRate) {
+		this(TileEntityTypesInit.CRUSHER_TILE_ENTITY.get(), capacity, consumeRate);
 	}
 
 	@Override
@@ -112,21 +115,26 @@ public class CrusherTileEntity extends LockableLootTileEntity implements ITickab
 			if(canCrush(iRecipe) && isNotFull && this.energyStorage.getEnergyStored() > this.getConsumeEnergyRate()) {
 				this.maxCrushingProgress = this.getTotalCrushingTime();
 				this.crushingProgress = this.getTotalCrushingTime();
+				this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(Crusher.WORKING, true), 3);
 			}
 			else {
 				this.maxCrushingProgress = 0;
+				this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(Crusher.WORKING, false), 3);
 			}
 		}
 		
 		if(this.crushingProgress > 0 && this.energyStorage.spendEnergy(this.getConsumeEnergyRate())) {
 			if(--crushingProgress == 0 && !itemStack.isEmpty()) {
 				ItemStack itemStack1 = ((IRecipe<ISidedInventory>) iRecipe).assemble(this);
+				itemStack1.setCount(this.getCountOfResult());
 				ItemStack itemStack2 = this.items.get(1);
 				itemStack.shrink(1);
-				if(itemStack2.isEmpty()) 
+				if(itemStack2.isEmpty()) {
 					this.setItem(1, itemStack1.copy());
-				else if(isNotFull)
-					itemStack2.grow(this.getCountOfResult());
+				}
+				else if(isNotFull) {
+					itemStack2.grow(itemStack1.getCount());
+				}
 			}
 			if(itemStack.isEmpty()) {
 				this.maxCrushingProgress = 0;
@@ -158,7 +166,8 @@ public class CrusherTileEntity extends LockableLootTileEntity implements ITickab
 	}
 	
 	public int getCountOfResult() {
-		return this.level.getRecipeManager().getRecipeFor(RecipesTypeInit.CRUSHING_RECIPE, this, this.level).map(CrusherRecipe::getCount).orElse(1);
+		return this.level.getRecipeManager().getRecipeFor(RecipesTypeInit.CRUSHING_RECIPE, this, this.level)
+				.map(CrusherRecipe::getCount).orElse(1);
 	}
 	
 	public int getConsumeEnergyRate() {

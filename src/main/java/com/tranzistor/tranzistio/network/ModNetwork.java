@@ -19,5 +19,10 @@ public class ModNetwork {
 		CHANNEL.registerMessage(0, RefreshReceiversCachePacket.class,
 				RefreshReceiversCachePacket::encode, RefreshReceiversCachePacket::decode,
 				RefreshReceiversCachePacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+		CHANNEL.registerMessage(1, FluidSyncC2S.class,
+		     	FluidSyncC2S::encode, FluidSyncC2S::decode,
+				FluidSyncC2S::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
 	}
+	
+	
 }

@@ -3,9 +3,13 @@ package com.tranzistor.tranzistio;
 import com.tranzistor.tranzistio.client.gui.CoalGeneratorScreen;
 import com.tranzistor.tranzistio.client.gui.ElectricFurnaceScreen;
 import com.tranzistor.tranzistio.client.gui.CrusherScreen;
+import com.tranzistor.tranzistio.client.gui.FluidFillerScreen;
 import com.tranzistor.tranzistio.init.ContainersInit;
+import com.tranzistor.tranzistio.init.FluidInit;
 
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +24,13 @@ public class ClientEventBusSubscriber {
 		ScreenManager.register(ContainersInit.COAL_GENERATOR.get(), CoalGeneratorScreen::new);
 		ScreenManager.register(ContainersInit.ELECTRIC_FURNACE.get(), ElectricFurnaceScreen::new);
 		ScreenManager.register(ContainersInit.CRUSHER.get(), CrusherScreen::new);
+		ScreenManager.register(ContainersInit.FLUID_FILLER.get(), FluidFillerScreen::new);
+		event.enqueueWork(() -> {
+    		RenderTypeLookup.setRenderLayer(FluidInit.EPOXY_RESIN_FLUID.get(), RenderType.translucent());
+    		RenderTypeLookup.setRenderLayer(FluidInit.EPOXY_RESIN_BLOCK.get(), RenderType.translucent());
+    		RenderTypeLookup.setRenderLayer(FluidInit.EPOXY_RESIN_FLOWING.get(), RenderType.translucent());
+    	
+    	});
 	}
 
 }

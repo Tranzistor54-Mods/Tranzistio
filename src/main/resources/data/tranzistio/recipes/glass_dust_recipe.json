@@ -1,0 +1,11 @@
+{
+ "type": "tranzistio:crushing",
+ "ingredient": [
+   {
+    "item": "minecraft:glass"
+   }
+  ],
+ "result": {"item": "tranzistio:glass_dust"},
+ "count": 2,
+ "crushingtime": 300
+}

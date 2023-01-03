@@ -1,0 +1,27 @@
+{
+  "type": "tranzistio:fluid_filling",
+  "pattern": [
+  		"FFF",
+  		"GGG",
+  		"OOO"
+  ],
+  "key": {
+  	"F": {
+  		"item": "tranzistio:copper_foil"
+  	},
+  	"G": {
+  		"item": "tranzistio:glass_dust"	
+  	},
+  	"O": {
+  		"item": "tranzistio:compressed_organic_fiber"
+  	}
+  },
+  "fluid": {
+	"FluidName": "tranzistio:epoxy_resin_still",
+	"Amount": 500
+  },
+  "workingtime": 350,
+  "result":  {"item": "tranzistio:printed_board"},
+  "count": 2
+ }
+  
