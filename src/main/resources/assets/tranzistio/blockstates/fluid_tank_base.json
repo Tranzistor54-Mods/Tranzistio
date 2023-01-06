@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "tranzistio:block/fluid_tank_base" }
+    }
+}

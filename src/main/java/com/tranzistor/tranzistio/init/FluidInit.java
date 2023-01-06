@@ -45,7 +45,7 @@ public class FluidInit {
 			this.block(block);
 			this.bucket(bucket);
 			this.levelDecreasePerBlock(decrease);
-			this.slopeFindDistance(slopeDist);
+			this.slopeFindDistance(slopeDist); 
 		}
 	}
 }

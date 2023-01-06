@@ -5,6 +5,7 @@ import com.tranzistor.tranzistio.te.CoalGeneratorTileEntity;
 import com.tranzistor.tranzistio.te.CrusherTileEntity;
 import com.tranzistor.tranzistio.te.ElectricFurnaceTileEntity;
 import com.tranzistor.tranzistio.te.FluidFillerTileEntity;
+import com.tranzistor.tranzistio.te.FluidTankTileEntity;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
@@ -27,4 +28,7 @@ public class TileEntityTypesInit {
 	
 	public static final RegistryObject<TileEntityType<FluidFillerTileEntity>> FLUID_FILLER_TILE_ENTITY = TILE_ENTITY_TYPE.register("fluid_filler_tile_entity", 
 			()  -> TileEntityType.Builder.of(() -> new FluidFillerTileEntity(8192, 64, 16000), BlockInit.FLUID_FILLER.get()).build(null));
+	
+	public static final RegistryObject<TileEntityType<FluidTankTileEntity>> FLUID_TANK_TILE_ENTITY_BASE = TILE_ENTITY_TYPE.register("fluid_tank_tile_entity_base",
+			()  -> TileEntityType.Builder.of(() -> new FluidTankTileEntity(16000), BlockInit.FLUID_TANK_BASE.get()).build(null));
 }

@@ -145,7 +145,6 @@ public class FluidFillerTileEntity extends LockableLootTileEntity implements ITi
 			if(this.progress > 0 && this.energyStorage.spendEnergy(this.getConsumeEnergyRate())) {
 				if(--progress == 0) {
 					ItemStack stack1 = ((IRecipe<ISidedInventory>) iRecipe).assemble(this);
-					//this.shrinkItemsInGrid();
 					this.fluidStorage.drain(this.getFluidForRecipe().getAmount(), FluidAction.EXECUTE);
 					this.shrinkItemsInGrid();
 					ItemStack stack2 = this.items.get(10);

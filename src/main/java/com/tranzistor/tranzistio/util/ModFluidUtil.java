@@ -55,9 +55,9 @@ public class ModFluidUtil {
 	}
 	
 	public static void fillFluidStorageFromHand(FluidTank fluidStorage, FluidStack stack, ItemStack container, PlayerEntity player, BlockPos pos) {
-			fluidStorage.fill(stack, IFluidHandler.FluidAction.EXECUTE);
-			player.setItemInHand(Hand.MAIN_HAND, container);
-			ModNetwork.CHANNEL.sendToServer(new FluidSyncC2S(fluidStorage.getFluid(), pos, container));
+		fluidStorage.fill(stack, IFluidHandler.FluidAction.EXECUTE);
+		player.setItemInHand(Hand.MAIN_HAND, container);
+		ModNetwork.CHANNEL.sendToServer(new FluidSyncC2S(fluidStorage.getFluid(), pos, container));
 	}
 	
 	public static void drainFluidStorageFromHand(FluidTank fluidStorage, ItemStack container, PlayerEntity player, BlockPos pos, int drainAmount) {
