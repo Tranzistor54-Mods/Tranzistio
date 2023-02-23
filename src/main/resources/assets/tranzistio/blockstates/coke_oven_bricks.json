@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "invisible=true": {
+      "model": "tranzistio:block/coke_oven_brick_invs"
+    },
+	"invisible=false": {
+		"model": "tranzistio:block/coke_oven_bricks"
+	}
+  }
+}

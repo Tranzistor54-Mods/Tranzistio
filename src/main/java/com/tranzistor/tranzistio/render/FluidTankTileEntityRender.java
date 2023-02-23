@@ -97,6 +97,7 @@ public class FluidTankTileEntityRender extends TileEntityRenderer<FluidTankTileE
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected void setGLColorFromInt(int color) {
         float red = (color >> 16 & 0xFF) / 255.0F;
         float green = (color >> 8 & 0xFF) / 255.0F;

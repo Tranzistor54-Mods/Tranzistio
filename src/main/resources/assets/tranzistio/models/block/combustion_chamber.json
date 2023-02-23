@@ -1,0 +1,5 @@
+{
+	"loader": "forge:obj",
+	"model": "tranzistio:models/block/mb_models/coke_oven_model.obj",
+	"flip-v": true
+}

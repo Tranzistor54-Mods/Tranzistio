@@ -46,7 +46,6 @@ public class FluidFillerScreen extends ContainerScreen<FluidFillerContainer> {
 		this.blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
 		
 		this.addButton(new Button(this.leftPos + 8, this.topPos + 27, 18, 6, new TranslationTextComponent(""), (button) -> {
-			//this.te.updateFluidStorage();
 			ModFluidUtil.emptyTheFluidStorage(te.fluidStorage, te.getBlockPos());
 		}));
 		
@@ -90,6 +89,7 @@ public class FluidFillerScreen extends ContainerScreen<FluidFillerContainer> {
 	@Override
 	protected void renderLabels(MatrixStack matrixstack, int x, int y) {
 		this.font.draw(matrixstack, this.inventory.getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, 4210752);
+		this.font.draw(matrixstack, new TranslationTextComponent("Liquid Filler"), 115, 7, 4319752);
 	}
 	
 	protected void renderFluid(MatrixStack matrixStack, Fluid fluid) {
@@ -110,6 +110,7 @@ public class FluidFillerScreen extends ContainerScreen<FluidFillerContainer> {
 		return mouseX > this.leftPos + 8 && mouseX < this.leftPos + 47 && mouseY > this.topPos + 35 && mouseY < this.topPos + 69;
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected void setGLColorFromInt(int color) {
         float red = (color >> 16 & 0xFF) / 255.0F;
         float green = (color >> 8 & 0xFF) / 255.0F;

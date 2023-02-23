@@ -38,8 +38,8 @@ import net.minecraftforge.items.IItemHandler;
 
 public class CrusherTileEntity extends LockableLootTileEntity implements ITickableTileEntity, ISidedInventory, ISidedEnergyContainer {
 
-	public final ModEnergyStorage energyStorage;// = new ModEnergyStorage(this, 8192, 32, 0);
-	private LazyOptional<ModEnergyStorage> loEnergyStorage;//= LazyOptional.of(() -> this.energyStorage);
+	public final ModEnergyStorage energyStorage;
+	private LazyOptional<ModEnergyStorage> loEnergyStorage;
 	public static int slots = 2;
 	public int crushingProgress = 0, maxCrushingProgress = 0;
 	private static final int[] ENTER_SLOT = new int[] { 0 };
@@ -109,7 +109,7 @@ public class CrusherTileEntity extends LockableLootTileEntity implements ITickab
 	@Override
 	public void tick() {
 		IRecipe<?> iRecipe = this.level.getRecipeManager().getRecipeFor(RecipesTypeInit.CRUSHING_RECIPE, this, this.level).orElse(null);
-		boolean isNotFull = this.items.get(1).getCount() + this.getCountOfResult() < this.getMaxStackSize();
+		boolean isNotFull = this.items.get(1).getCount() < this.getMaxStackSize();
 		ItemStack itemStack = this.items.get(0);
 		if(this.crushingProgress == 0) {
 			if(canCrush(iRecipe) && isNotFull && this.energyStorage.getEnergyStored() > this.getConsumeEnergyRate()) {
@@ -126,7 +126,6 @@ public class CrusherTileEntity extends LockableLootTileEntity implements ITickab
 		if(this.crushingProgress > 0 && this.energyStorage.spendEnergy(this.getConsumeEnergyRate())) {
 			if(--crushingProgress == 0 && !itemStack.isEmpty()) {
 				ItemStack itemStack1 = ((IRecipe<ISidedInventory>) iRecipe).assemble(this);
-				itemStack1.setCount(this.getCountOfResult());
 				ItemStack itemStack2 = this.items.get(1);
 				itemStack.shrink(1);
 				if(itemStack2.isEmpty()) {
@@ -156,18 +155,13 @@ public class CrusherTileEntity extends LockableLootTileEntity implements ITickab
 			return true;
 		if (!itemstack1.sameItem(itemstack))
 			return false;
-		int resultAmount = itemstack1.getCount() + itemstack.getCount() * this.getCountOfResult();
+		int resultAmount = itemstack1.getCount() + itemstack.getCount();
 		return resultAmount <= this.getMaxStackSize() && resultAmount <= itemstack1.getMaxStackSize();
 	}
 	
 	public int getTotalCrushingTime() {
 		return this.level.getRecipeManager().getRecipeFor(RecipesTypeInit.CRUSHING_RECIPE, this, this.level)
 				.map(CrusherRecipe::getCrushingTime).orElse(300);
-	}
-	
-	public int getCountOfResult() {
-		return this.level.getRecipeManager().getRecipeFor(RecipesTypeInit.CRUSHING_RECIPE, this, this.level)
-				.map(CrusherRecipe::getCount).orElse(1);
 	}
 	
 	public int getConsumeEnergyRate() {

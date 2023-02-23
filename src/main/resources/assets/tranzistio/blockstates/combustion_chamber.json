@@ -1,0 +1,35 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "facing=north,formed=true": {
+      "model": "tranzistio:block/combustion_chamber"
+    },
+	"facing=north,formed=false": {
+      "model": "tranzistio:block/combustion_chamber_unform"
+    },
+	"facing=east,formed=true": {
+      "model": "tranzistio:block/combustion_chamber",
+	  "y": 90
+    },
+	"facing=east,formed=false": {
+      "model": "tranzistio:block/combustion_chamber_unform",
+	  "y": 90
+    },
+	"facing=south,formed=true": {
+      "model": "tranzistio:block/combustion_chamber",
+	  "y": 180
+    },
+	"facing=south,formed=false": {
+      "model": "tranzistio:block/combustion_chamber_unform",
+	  "y": 180
+    },
+	"facing=west,formed=true": {
+      "model": "tranzistio:block/combustion_chamber",
+	  "y": 270
+    },
+	"facing=west,formed=false": {
+      "model": "tranzistio:block/combustion_chamber_unform",
+	  "y": 270
+    }
+   }
+}

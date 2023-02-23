@@ -22,6 +22,9 @@ public class ModNetwork {
 		CHANNEL.registerMessage(1, FluidSyncC2S.class,
 		     	FluidSyncC2S::encode, FluidSyncC2S::decode,
 				FluidSyncC2S::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
+		CHANNEL.registerMessage(2, MultiblockSyncS2C.class,
+				MultiblockSyncS2C::encode, MultiblockSyncS2C::decode,
+				MultiblockSyncS2C::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 	}
 	
 	

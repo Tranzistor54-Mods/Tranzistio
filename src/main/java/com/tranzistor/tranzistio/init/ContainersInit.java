@@ -2,6 +2,7 @@ package com.tranzistor.tranzistio.init;
 
 import com.tranzistor.tranzistio.Tranzistio;
 import com.tranzistor.tranzistio.containers.CoalGeneratorContainer;
+import com.tranzistor.tranzistio.containers.CokeOvenContainer;
 import com.tranzistor.tranzistio.containers.CrusherContainer;
 import com.tranzistor.tranzistio.containers.ElectricFurnaceContainer;
 import com.tranzistor.tranzistio.containers.FluidFillerContainer;
@@ -19,5 +20,5 @@ public class ContainersInit {
 	public static final RegistryObject<ContainerType<ElectricFurnaceContainer>> ELECTRIC_FURNACE = CONTAINERS.register("electric_furnace_container", () -> IForgeContainerType.create(ElectricFurnaceContainer::new));
 	public static final RegistryObject<ContainerType<CrusherContainer>> CRUSHER = CONTAINERS.register("crusher_container", () -> IForgeContainerType.create(CrusherContainer::new));
 	public static final RegistryObject<ContainerType<FluidFillerContainer>> FLUID_FILLER = CONTAINERS.register("fluid_filler_container", () -> IForgeContainerType.create(FluidFillerContainer::new));
-	
+	public static final RegistryObject<ContainerType<CokeOvenContainer>> COKE_OVEN = CONTAINERS.register("coke_oven_container", () -> IForgeContainerType.create(CokeOvenContainer::new));
 }

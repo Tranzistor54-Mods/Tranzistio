@@ -22,14 +22,12 @@ public class CrusherRecipe implements ICrusherRecipe {
 	private final ItemStack result;
 	private final NonNullList<Ingredient> recipeItems;
 	private final int crushingTime;
-	private final int count;
 	
-	public CrusherRecipe(ResourceLocation id, ItemStack result, NonNullList<Ingredient> recipeItems, int crushingTime, int count) {
+	public CrusherRecipe(ResourceLocation id, ItemStack result, NonNullList<Ingredient> recipeItems, int crushingTime) {
 		this.id = id;
 		this.result = result;
 		this.recipeItems = recipeItems;
 		this.crushingTime = crushingTime;
-		this.count = count;
 	}
 
 	@Override
@@ -49,6 +47,11 @@ public class CrusherRecipe implements ICrusherRecipe {
 	public ItemStack getResultItem() {
 		return result.copy();
 	}
+	
+	@Override
+	public NonNullList<Ingredient> getIngredients() {
+		return recipeItems;
+	}
 
 	@Override
 	public ResourceLocation getId() {
@@ -57,10 +60,6 @@ public class CrusherRecipe implements ICrusherRecipe {
 	
 	public int getCrushingTime() {
 		return this.crushingTime;
-	}
-	
-	public int getCount() {
-		return this.count;
 	}
 
 	@Override
@@ -82,11 +81,11 @@ public class CrusherRecipe implements ICrusherRecipe {
 			ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
 			int crushingTime = JSONUtils.getAsInt(json, "crushingtime");
 			int count = JSONUtils.getAsInt(json, "count");
+			result.setCount(count);
 			JsonArray ingredient = JSONUtils.getAsJsonArray(json, "ingredient");
 			NonNullList<Ingredient> input = NonNullList.withSize(1, Ingredient.EMPTY);
 			input.set(0, Ingredient.fromJson(ingredient.get(0)));
-			
-			return new CrusherRecipe(id, result, input, crushingTime, count);
+			return new CrusherRecipe(id, result, input, crushingTime);
 		}
 
 		@Override
@@ -94,7 +93,7 @@ public class CrusherRecipe implements ICrusherRecipe {
 			NonNullList<Ingredient> input = NonNullList.withSize(1, Ingredient.EMPTY);
 			input.set(0, Ingredient.fromNetwork(buffer));
 			ItemStack result = buffer.readItem();
-			return new CrusherRecipe(id, result, input, 0, 0);
+			return new CrusherRecipe(id, result, input, 0);
 		}
 
 		@Override

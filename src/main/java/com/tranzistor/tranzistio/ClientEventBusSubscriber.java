@@ -4,6 +4,7 @@ import com.tranzistor.tranzistio.client.gui.CoalGeneratorScreen;
 import com.tranzistor.tranzistio.client.gui.ElectricFurnaceScreen;
 import com.tranzistor.tranzistio.client.gui.CrusherScreen;
 import com.tranzistor.tranzistio.client.gui.FluidFillerScreen;
+import com.tranzistor.tranzistio.client.gui.CokeOvenScreen;
 import com.tranzistor.tranzistio.init.BlockInit;
 import com.tranzistor.tranzistio.init.ContainersInit;
 import com.tranzistor.tranzistio.init.FluidInit;
@@ -29,14 +30,16 @@ public class ClientEventBusSubscriber {
 		ScreenManager.register(ContainersInit.ELECTRIC_FURNACE.get(), ElectricFurnaceScreen::new);
 		ScreenManager.register(ContainersInit.CRUSHER.get(), CrusherScreen::new);
 		ScreenManager.register(ContainersInit.FLUID_FILLER.get(), FluidFillerScreen::new);
+		ScreenManager.register(ContainersInit.COKE_OVEN.get(), CokeOvenScreen::new);
 		ClientRegistry.bindTileEntityRenderer(TileEntityTypesInit.FLUID_TANK_TILE_ENTITY_BASE.get(), FluidTankTileEntityRender::new);
 		event.enqueueWork(() -> {
     		RenderTypeLookup.setRenderLayer(FluidInit.EPOXY_RESIN_FLUID.get(), RenderType.translucent());
     		RenderTypeLookup.setRenderLayer(FluidInit.EPOXY_RESIN_BLOCK.get(), RenderType.translucent());
     		RenderTypeLookup.setRenderLayer(FluidInit.EPOXY_RESIN_FLOWING.get(), RenderType.translucent());
     		RenderTypeLookup.setRenderLayer(BlockInit.FLUID_TANK_BASE.get(), RenderType.translucent());
+    		RenderTypeLookup.setRenderLayer(BlockInit.COKE_OVEN_BRICKS.get(), RenderType.translucent());
     	
     	});
 	}
-
+	
 }

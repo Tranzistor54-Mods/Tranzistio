@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -65,6 +66,7 @@ public class ElectricFurnaceScreen extends ContainerScreen<ElectricFurnaceContai
 	@Override
 	protected void renderLabels(MatrixStack matrixstack, int x, int y) {
 		this.font.draw(matrixstack, this.inventory.getDisplayName(), (float)this.inventoryLabelX, (float)this.inventoryLabelY, 4210752);
+		this.font.draw(matrixstack, new TranslationTextComponent("Electrical Furnace"), 9, 2, 4319752);
 	}
 	
 	protected boolean isHoveringEnergy(int mouseX, int mouseY) {

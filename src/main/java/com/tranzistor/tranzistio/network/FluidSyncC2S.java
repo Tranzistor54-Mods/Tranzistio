@@ -53,14 +53,9 @@ public class FluidSyncC2S {
 				if(te instanceof FluidTank)
 					((FluidTank)te).setFluid(packet.fluid);
 			});
-			//if(tile instanceof FluidFillerTileEntity) {
-				//FluidFillerTileEntity te = (FluidFillerTileEntity) tile;
-				//te.setFluid(packet.fluid);
 				if(packet.container != null) {
 					player.setItemInHand(Hand.MAIN_HAND, packet.container);
 				}
-			//}
-			
 		});
 		ctx.setPacketHandled(true);
 	}

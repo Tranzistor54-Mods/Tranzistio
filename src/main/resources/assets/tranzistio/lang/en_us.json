@@ -11,6 +11,8 @@
 	"block.tranzistio.copper_cable": "Copper Cable",
 	"block.tranzistio.crusher": "Electrical Crusher",
 	"block.tranzistio.fluid_filler": "Electrical Liquid Filler",
+	"block.tranzistio.coke_oven_bricks": "Coke Oven Bricks",
+	"block.tranzistio.combustion_chamber": "Combustion Chamber",
 	"fluid.tranzistio.epoxy_resin": "Epoxy Resin",
 	"fluid.tranzistio.epoxy_resin_still": "Epoxy Resin",
 	"item.tranzistio.electrical_lamp": "Vacuum Electrical Lamp",
