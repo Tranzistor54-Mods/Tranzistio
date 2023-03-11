@@ -1,7 +1,8 @@
 package com.tranzistor.tranzistio.init;
 
 import com.tranzistor.tranzistio.Tranzistio;
-import com.tranzistor.tranzistio.items.CraftDamageable;
+import com.tranzistor.tranzistio.items.ModItems.CraftDamageable;
+import com.tranzistor.tranzistio.items.ModItems.ModFuelItems;
 import com.tranzistor.tranzistio.items.Destroyer;
 
 import net.minecraft.item.BucketItem;
@@ -21,9 +22,11 @@ public class ItemInit {
 	public static final RegistryObject<Item> VACUUM_TUBE = ITEMS.register("electrical_lamp", () -> new Item(new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP)));
 	public static final RegistryObject<Item> DESTROYER = ITEMS.register("destroyer", () -> new Destroyer(new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP).durability(64).addToolType(ToolType.PICKAXE, 2)));
 	public static final RegistryObject<Item> EPOXY_RESIN_BUCKET = ITEMS.register("epoxy_resin_bucket", () -> new BucketItem(() -> FluidInit.EPOXY_RESIN_FLUID.get(), new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP).stacksTo(1)));
+	public static final RegistryObject<Item> CREOSOTE_OIL_BUCKET = ITEMS.register("creosote_oil_bucket", () -> new BucketItem(() -> FluidInit.CREOSOTE_OIL_FLUID.get(), new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP).stacksTo(1)));
 	public static final RegistryObject<Item> GLASS_DUST = ITEMS.register("glass_dust", () -> new Item(new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP)));
 	public static final RegistryObject<Item> COPPER_FOIL = ITEMS.register("copper_foil", () -> new Item(new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP)));
 	public static final RegistryObject<Item> COMPRESSED_ORGANIC_FIBER = ITEMS.register("compressed_organic_fiber", () -> new Item(new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP)));
 	public static final RegistryObject<Item> PRINTED_BOARD = ITEMS.register("printed_board", () -> new Item(new Item.Properties().tab(Tranzistio.TRANZISTIO_ITEM_GROUP)));
+	public static final RegistryObject<Item> COKE_COAL = ITEMS.register("coke_coal", () -> new ModFuelItems(32000));
 	
 }

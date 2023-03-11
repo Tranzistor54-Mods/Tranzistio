@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.tranzistor.tranzistio.init.RecipesTypeInit;
+import com.tranzistor.tranzistio.recipes.IModRecipes.IFluidFillerRecipe;
 import com.tranzistor.tranzistio.util.ModFluidUtil;
 
 import net.minecraft.inventory.IInventory;

@@ -1,0 +1,15 @@
+{
+	"type": "tranzistio:coking",
+	"ingredient": [
+		{
+			"item": "minecraft:coal"
+		}
+	],
+	"fluid": {
+		"FluidName": "tranzistio:creosote_oil_fluid",
+		"Amount": 500
+	},
+	"cokingtime": 200,
+	"result": {"item": "tranzistio:coke_coal"},
+	"count": 1
+}

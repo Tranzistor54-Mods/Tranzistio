@@ -3,11 +3,9 @@ package com.tranzistor.tranzistio.te;
 import com.tranzistor.tranzistio.init.TileEntityTypesInit;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.IItemHandler;
 
 public class CokeOvenBricksTE extends BaseMBPartTE{
 
